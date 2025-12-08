@@ -226,26 +226,30 @@
             <div class="menu-list">
                 <div class="menu-item" id="antipasto">
                     <h3>1. L'Antipasto Stellato</h3>
-                    <p>Affettati misti con cotorno di giardineria, pomodorini con tonna e insalata russa e insalata di mare.</p>
+                    <p>Affettati misti con cotorno di giardineria, pomodorini con tonno e insalata russa e insalata di mare.</p>
                 </div>
                 <div class="menu-item" id="primo">
                     <h3>2.  Primo alternativ</h3>
-                    <p>Tagliatelle per tutti ma.... per la tradizone sugo di salsiccia e funghi porcini(dello zio Giamma), invece per chi preferisce il mare conditi con gamberi e zucchine.</p>
+                    <p>Tagliatelle per tutti ma.... per la tradizone sugo di salsiccia e funghi raccolti dallo Zio Gianmario, invece per chi preferisce il mare conditi con gamberi e zucchine.</p>
                 </div>
                 <div class="menu-item" id="secondo">
                     <h3>3. Un secondo classicone</h3>
-                    <p>Abbiamo una vasta scelta di solo carne, il polpettone della mamma Sara, e la pernice di nonna Tina. </p>
+                    <p>Abbiamo una vasta scelta di sola carne, il polpettone offerto dalla zia Rosanna ma cucinato dalla mamma Sara, arrosto di vitello offerto e cucinato dalla nonna Tina. </p>
                 </div>
                 <div class="menu-item" id="contorni">
                     <h4>4. Contorni dal palato delicato</h4>
-                    <p>Ad accompagnare i nostri secondi la cucina mette vi offre cipolle caramellate patate arrosto verdute grigliate.</p>
+                    <p>Ad accompagnare i nostri secondi la cucina vi offre: cipolle caramellate, patate arrosto o lessate e verdute grigliate.</p>
+                </div>
+                <div class="menu-item" id="formaggi">
+                    <h5> Formaggi misti offerti dallo spaccio di Angelo Croce</h5>
+                </div>
                 <div class="menu-item" id="dolce">
                     <h3>5. Il dolce tradizionale</h3>
                     <p>Panettone offerto da qualcuno, Pandoro offerto dallo zio Mario con mascarpone DOC dello spaccio Angelo Croce fatto da Marco e Michele.</p>
                 </div>
                 <div class="menu-item" id="caffe">
                     <h3>6. Conlusione alcolica e non </h3>
-                    <p>Caffè, amari, e il famoso elisir di lunga vita.</p>
+                    <p>Caffè, amari, il famoso elisir di lunga vita, frutta secca e non offerta dalla zia Cristina</p>
                 </div>
             </div>
             <button id="next-course-btn" class="festive-button">Inizia il Pranzo (Antipasto)</button>
@@ -293,7 +297,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Array con gli ID delle portate nell'ordine corretto
-            const courseOrder = ['antipasto', 'primo', 'secondo', 'dolce', 'caffe'];
+            const courseOrder = ['antipasto', 'primo', 'secondo','contorni','formaggi', 'dolce', 'caffe'];
             let currentCourseIndex = -1; // Iniziamo da -1 così il primo click va a 0 (Antipasto)
 
             // Seleziona il pulsante
@@ -377,5 +381,6 @@
     </body>
 
 </html>
+
 
 
