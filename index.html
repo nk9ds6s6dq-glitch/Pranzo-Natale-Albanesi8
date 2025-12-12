@@ -76,8 +76,61 @@
             text-shadow: 4px 4px 8px var(--red-christmas), 0 0 20px var(--accent-light);
             margin-bottom: 1rem;
             line-height: 1.1;
-            /* CAMBIO APPLICATO QUI: */
             font-style: italic; 
+        }
+        
+        /* ANIMAZIONE CANDELA */
+        .flame-glow {
+            animation: candle-flicker 3s infinite alternate;
+        }
+
+        @keyframes candle-flicker {
+            0% { 
+                text-shadow: 
+                    4px 4px 8px var(--red-christmas), 
+                    0 0 20px var(--accent-light), 
+                    0 0 5px rgba(255, 255, 180, 0.8); /* Bagliore Giallo-Caldo più intenso */
+            }
+            50% { 
+                text-shadow: 
+                    3px 3px 6px var(--red-christmas), 
+                    0 0 15px var(--accent-light), 
+                    0 0 2px rgba(255, 255, 180, 0.4); /* Bagliore più debole (sfarfallio) */
+            }
+            100% { 
+                text-shadow: 
+                    4px 4px 8px var(--red-christmas), 
+                    0 0 22px var(--accent-light), 
+                    0 0 8px rgba(255, 255, 180, 1); /* Bagliore Giallo-Caldo massimo */
+            }
+        }
+
+        /* ANIMAZIONE LUCI DI NATALE PER IL LOGIN */
+        @keyframes festive-pulse {
+            0% {
+                box-shadow: 
+                    inset 0 0 10px 5px var(--red-christmas), 
+                    0 0 20px 10px rgba(255, 215, 0, 0.5); /* Rosso profondo e Oro */
+                filter: brightness(0.65);
+            }
+            50% {
+                box-shadow: 
+                    inset 0 0 15px 8px rgba(255, 0, 0, 0.8),
+                    0 0 30px 15px var(--gold-christmas); /* Massimo bagliore */
+                filter: brightness(1);
+            }
+            100% {
+                box-shadow: 
+                    inset 0 0 10px 5px var(--red-christmas), 
+                    0 0 20px 10px rgba(255, 215, 0, 0.5);
+                filter: brightness(0.65);
+            }
+        }
+        
+        /* Applica l'animazione all'overlay di login */
+        #login-overlay.festive-lights {
+            animation: festive-pulse 4s infinite alternate ease-in-out;
+            background-blend-mode: multiply; /* Mantiene l'effetto dello sfondo scuro */
         }
 
         /* Titoli delle Card: Applicazione Corsivo */
@@ -90,7 +143,6 @@
             font-size: 3.8rem;
             text-align: center;
             text-shadow: 1px 1px 0 var(--gold-christmas);
-            /* CAMBIO APPLICATO QUI: */
             font-style: italic; 
         }
 
@@ -101,7 +153,6 @@
             font-size: 2.5rem;
             margin-bottom: 10px;
             line-height: 1.1;
-            /* CAMBIO APPLICATO QUI: */
             font-style: italic; 
         }
 
@@ -114,11 +165,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* CAMBIO APPLICATO QUI: */
             font-style: italic; 
         }
-
-        /* Altro CSS (non toccato) */
 
         /* Header/Hero Section */
         .hero {
@@ -294,7 +342,7 @@
             font-family: 'Great Vibes', cursive;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
-
+        
         /* Media Queries */
         @media (max-width: 768px) {
             .hero-content h1 {
@@ -320,19 +368,37 @@
         Il tuo browser non supporta l'elemento audio.
     </audio>
 
-    <div id="login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--wood-dark); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
+    <div id="login-overlay" class="festive-lights" style="
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        z-index: 1000; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        text-align: center; 
+        padding: 20px;
+        /* SFONDO LOGIN: Neve/Abiti */
+        background-color: var(--wood-dark); 
+        background-image: url('https://images.unsplash.com/photo-1549488340-d9d13a47b30f?fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+    ">
         <h1 style="font-family: 'Great Vibes', cursive; font-size: 4rem; color: var(--gold-christmas); margin-bottom: 20px; font-style: italic;">Benvenuto al pranzo di Natale in casa Albanesi 🏡</h1>
-        <p style="color: var(--cream-bg); font-size: 1.2rem; max-width: 400px; margin-bottom: 30px;">
+        <p style="color: var(--cream-bg); font-size: 1.2rem; max-width: 400px; margin-bottom: 30px; text-shadow: 1px 1px 2px #000;">
             Inserisci il tuo nome o **Parenti** per verificare il tuo invito e accedere alla lista.
         </p>
 
         <input type="text" id="guest-name-input" placeholder="Il tuo Nome (es. 'Giamma','Sara','Miriam', 'Parenti')" style="padding: 15px; font-size: 1.1rem; border: 3px solid var(--green-christmas); border-radius: 5px; width: 90%; max-width: 350px; margin-bottom: 20px; text-align: center; text-transform: capitalize;">
         
         <button id="access-btn" class="festive-button" style="max-width: 350px;">
-            Accedi all'Invito Segreto 🔑
+            Accedi per scoprire il pranzo Natalizio🔑
         </button>
 
-        <p id="error-message" style="color: #FF6347; font-weight: bold; margin-top: 15px; display: none;">Nome non riconosciuto. Riprova o contatta la segreteria! 🌲</p>
+        <p id="error-message" style="color: #FF6347; font-weight: bold; margin-top: 15px; display: none; text-shadow: 1px 1px 2px #000;">Nome non riconosciuto. Riprova o contatta la segreteria! 🌲</p>
     </div>
     
     <div id="content-wrapper" style="display: none;"> 
@@ -341,8 +407,8 @@
 
         <header class="hero">
             <div class="hero-content">
-                <h1>🕯️ L'Atmosfera Magica del Natale Albanesi 🏡</h1>
-                <p id="welcome-message">Il camino scoppietta, le luci brillano. Entrate nel nostro rifugio culinario, dove le tradizioni si incontrano e il cuore si scalda. Benvenuti a casa!</p>
+                <h1 class="flame-glow">🕯️ L'Atmosfera Magica del Natale Albanesi 🏡</h1>
+                <p id="welcome-message"> A Natale, tutte le strade conducono a casa. Entrate! Vi accoglie la magia della casa Albanesi, tra profumi di festa e l'abbraccio della famiglia.!</p>
                 
                 <div id="countdown-timer">Caricamento countdown...</div>
             </div>
@@ -350,6 +416,27 @@
 
         <main class="container">
             
+            <section id="table-seat-section" class="card" style="border-color: var(--green-christmas);">
+                <h2 style="color: var(--red-christmas); border-bottom-color: var(--gold-christmas);">🪑 Trova il Tuo Posto a Tavola!</h2>
+                <p>Prima di sedervi, ecco un indizio criptico sul vostro ruolo (e posto) per la giornata. Cercate il bigliettino che corrisponde al vostro "Titolo Onorario"!</p>
+                <div id="guest-seat-info" style="
+                    margin-top: 30px; 
+                    padding: 25px; 
+                    background-color: var(--accent-light); 
+                    border-radius: 10px; 
+                    border: 3px solid var(--red-christmas);
+                    text-align: center;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    display: none; /* Nascondi finché il login non lo rivela */
+                ">
+                    <p style="color: var(--wood-dark);">
+                        <span style="font-size: 1.8rem; color: var(--green-christmas); display: block; margin-bottom: 10px;">Il tuo Titolo Onorario è:</span>
+                        <strong id="seat-title" style="font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--red-christmas); line-height: 1.2;">Caricamento...</strong>
+                        <span id="seat-description" style="display: block; margin-top: 15px; font-style: italic;"></span>
+                    </p>
+                </div>
+            </section>
             <section id="introduzione" class="card">
                 <h2>🎉 Siete pronti per la scoperta del menu?</h2>
                 <p>Siamo pronti per la celebrazione! Questo menù è stato pensato per abbracciare tutti, dalle esigenze alimentari (colesterolo, celiachia, no-maiale) al desiderio di sapori indimenticabili. Mettete via i pensieri e preparatevi a mangiare, e sopratutto a bere! **Buon Natale!**</p>
@@ -370,7 +457,7 @@
                 <div class="menu-list">
                     <div class="menu-item" id="antipasto">
                         <h3>1. L'Antipasto dell'Abete</h3>
-                        <p>Affettati, giardiniera, pomodorini con tonno, insalata russa e insalata di mare offerti gentilmente dalla Famiglia Betti-Griffini. Un mosaico di sapori per iniziare con brio.</p>
+                        <p>Affettati con gnocco fritto, giardiniera, pomodorini con tonno, insalata russa e insalata di mare offerti gentilmente dalla Famiglia Betti-Griffini. Un mosaico di sapori per iniziare con brio.</p>
                     </div>
                     <div class="menu-item" id="primo">
                         <h3>2. Primo di Caccia e di Mare <span class="material-symbols-outlined special-dish" title="Ricetta dello Zio Gianmario">restaurant_menu</span></h3>
@@ -409,10 +496,11 @@
                     </div>
                     <div class="menu-item" style="grid-column: 1 / -1; background-color: var(--accent-light);">
                         <h3>La Rassegna degli Avanzi</h3>
-                        <p>Gli avanzi del pranzo della casa: una selezione di tutto ciò che è sopravvissuto. Metteteci il cuore, speriamo riusciate ancora a mangiare qualcosa! Se non altro, per far posto al dolce!</p>
+                        <p>Gli avanzi del pranzo della casa: una selezione di tutto ciò che è sopravvissuto. Metteteci il cuore, sperando riusciate ancora a mangiare qualcosa! Se non altro, per far posto al dolce!</p>
                     </div>
                 </div>
             </section>
+            
             <section id="ospiti" class="card">
                 <h2>👨‍👩‍👧‍👦 Indovina chi viene a Natale</h2>
                 <p>Clicca sul nome per una nota speciale su ciascun commensale! </p>
@@ -499,7 +587,7 @@
                         <span class="material-symbols-outlined guest-icon">restaurant</span>
                         <h4>Zia Rosanna <span class="material-symbols-outlined visibility-icon">visibility</span></h4>
                         <div class="guest-details">
-                            <p> Il suo posto d'onore a Capotavola è assicurato per coinvolgere gli altri a fare sempre un brindisi, tranqui non beve mai l'acqua, solo vino bianco.</p>
+                            <p>L'esperta di polpettoni e colei che, come Marco, tiene tutto in ordine in casa. Il suo posto d'onore a Capotavola è assicurato per la sua maestria culinaria.</p>
                         </div>
                     </div>
                 </div>
@@ -526,7 +614,6 @@
                     </div>
                 </div>
             </section>
-
             <section id="onore-parenti" class="card" style="border-color: var(--green-christmas); background-color: var(--accent-light);">
                 <h2 style="color: var(--green-christmas); border-bottom-color: var(--red-christmas);">💖 Un Pensiero per tutti voi</h2>
                 <p style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--red-christmas);">
@@ -543,287 +630,186 @@
                     Col cuore Marco, Sara, Michele.
                 </p>
             </section>
-
         </main>
-
-        <footer class="footer">
-            <p>Con amore cibo e felicità in abbondanza, dalla Famiglia Albanesi. Auguriamo un Buon Natale 2025!</p>
-        </footer>
-
-    </div> 
-    <script>
-        // Variabili globali per la navigazione del menu
-        let currentCourseIndex = -1; 
-        let menuItems = []; 
-        const nextCourseBtn = document.getElementById('next-course-btn');
-
-        // *** LOGICA CICLO MENU AGGIUNTA ***
-        function startMenuCycle() {
-            menuItems = Array.from(document.querySelectorAll('#menu-pranzo .menu-item'));
-            if (menuItems.length > 0) {
-                // Inizializza al primo elemento
-                currentCourseIndex = 0; 
-                highlightCourse(currentCourseIndex);
-                nextCourseBtn.textContent = `Servi Ora: ${menuItems[currentCourseIndex].querySelector('h3').textContent.split('. ')[1]} 🍽️`;
-            }
-        }
-
-        function highlightCourse(index) {
-            menuItems.forEach((item, i) => {
-                item.classList.remove('active-course');
-                // Scorri all'elemento evidenziato
-                if (i === index) {
-                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            });
-            if (index >= 0 && index < menuItems.length) {
-                menuItems[index].classList.add('active-course');
-            }
-        }
         
-        function highlightNextCourse() {
-            if (menuItems.length === 0) return;
+        <footer class="footer">
+            Un Natale ricco di gioia, amore e abbuffate memorabili! Dalla Vostra Famiglia Albanesi. ❤️
+        </footer>
+        
+    </div>
 
-            // Rimuovi l'evidenziazione dalla portata precedente
-            if (currentCourseIndex >= 0 && currentCourseIndex < menuItems.length) {
-                menuItems[currentCourseIndex].classList.remove('active-course');
+    <script>
+        // Mappa globale per l'accesso e l'assegnazione dei posti a sedere.
+        const GUEST_SEATING_INFO = {
+            'mario': { title: 'Il Sommelier burlone', description: 'Posto d\'onore per supervisionare i livelli di vino. Avrai un posto strategico vicino al bicchiere di Rosanna.' },
+            'tina': { title: 'La Dea della Tradizione', description: 'Vicino al camino per stare al caldo e per assicurarti che tutti mangino abbastanza e nessuno tocchi il suo arrosto.' },
+            'sara': { title: 'LA Regista della casa', description: 'Posto tattico accanto alla cucina, per dirigere il flusso delle portate e gestire la logistica dei piatti.' },
+            'marco': { title: 'Il Guardiano del tavolo', description: 'Capotavola opposto, il tuo compito è rompere e dirigere anche a Natale.' },
+            'miriam': { title: 'L\'Elegante Ambasciatrice', description: 'Vicino al Papà Marco, per intercettare i commenti più divertenti e pianificare il prossimo giro di shopping con Rosanna.' },
+            'selma': { title: 'La Regina di Vittadone', description: 'Posto centrale, per lanciare frecciatine ad Armando e tenere d\'occhio l\'etichetta a tavola.' },
+            'desiree': { title: 'La Stella Cometa', description: 'Il tuo posto è vicino al suo Amore Michele però solo al 26 Dicembre, perchè il 25 è al Fate Bene Fratelli.' },
+            'giamma': { title: 'L\'Esperto Fungaiolo', description: 'Vicino a chi beve meno, così potrai raccontare le tue avventure e il tuo amore per le patate senza interruzioni.' },
+            'cristina': { title: 'Ridalora', description: 'Quando ride state tranquilli che la sentirete, ci auguriamo che andrete a casa ancora con le orecchie funzionanti.' },
+            'armando': { title: 'Il Marziano Social', description: 'Lontano dalle Zia, vicino al corridoio, così potrai alzarti e muoverti rapidamente se devi sfuggire agli sguardi indiscreti, chissa di chi???.' },
+            'michele': { title: 'L\'Erede e il  Calciatore più forte a tavola', description: 'Vicino a suo Zio Giamma, per discutere di calcio, ma lontano da Papà Marco per non discutere.' },
+            'rosanna': { title: 'Zia Alcol ', description: 'Posto d\'onore per giudicare ogni bicchiere di vino che berrà. Vicino a Selma e Miriam che la fanno diventare matta.' },
+            'parenti': { title: 'Gli Ospiti D\'Onore Collettivi', description: 'Troverete un posto a tavola tutto per voi, dove potrete sentirvi a casa e godervi il calore della Famiglia Albanesi.' }
+        };
+
+        let currentCourseIndex = 0;
+        const menuItems = document.querySelectorAll('.menu-list .menu-item');
+        
+        // Funzione per il Login/Accesso
+        document.getElementById('access-btn').addEventListener('click', checkAccess);
+
+        function checkAccess() {
+            const input = document.getElementById('guest-name-input');
+            const errorMessage = document.getElementById('error-message');
+            const guestName = input.value.toLowerCase().trim();
+            const seatingInfo = GUEST_SEATING_INFO[guestName];
+
+            if (seatingInfo) {
+                // Accesso consentito
+                errorMessage.style.display = 'none';
+                document.getElementById('login-overlay').style.opacity = '0';
+                
+                // Ritardo per l'animazione di dissolvenza
+                setTimeout(() => {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('content-wrapper').style.display = 'block';
+                    
+                    // Personalizzazione dei messaggi
+                    const displayName = input.value.trim().charAt(0).toUpperCase() + input.value.trim().slice(1).toLowerCase();
+                    document.getElementById('welcome-message').innerHTML = `Il camino scoppietta, le luci brillano. **${displayName}**, preparati per una giornata epica! Benvenuto/a a casa!`;
+                    
+                    // Mostra info posto a sedere
+                    document.getElementById('guest-seat-info').style.display = 'block';
+                    document.getElementById('seat-title').textContent = seatingInfo.title;
+                    document.getElementById('seat-description').textContent = seatingInfo.description;
+                    
+                    // Attiva l'effetto neve e il countdown
+                    createSnowflakes(50); 
+                    startCountdown();
+                }, 500); 
+
+            } else {
+                // Accesso negato
+                errorMessage.style.display = 'block';
             }
+        }
 
-            // Vai alla portata successiva
-            currentCourseIndex++;
+        // Funzione per il Menu Interattivo
+        document.getElementById('next-course-btn').addEventListener('click', showNextCourse);
+
+        function showNextCourse() {
+            // Rimuovi la classe da tutti
+            menuItems.forEach(item => item.classList.remove('active-course'));
 
             if (currentCourseIndex < menuItems.length) {
-                // Ancora portate da servire
-                highlightCourse(currentCourseIndex);
+                // Attiva la portata successiva
+                menuItems[currentCourseIndex].classList.add('active-course');
                 
                 // Aggiorna il testo del pulsante
-                const courseName = menuItems[currentCourseIndex].querySelector('h3').textContent.split('. ')[1];
-                nextCourseBtn.textContent = `Servi Prossimo: ${courseName} 🥂`;
+                const nextCourseName = (currentCourseIndex + 1 < menuItems.length) ? 
+                                       menuItems[currentCourseIndex + 1].querySelector('h3').textContent.split('. ')[1] : 
+                                       'Dolci & Amari 🥂';
                 
-                if (currentCourseIndex === menuItems.length - 1) {
-                    nextCourseBtn.textContent = "Ultimo Servizio: Amari & Auguri! 🎉";
-                }
-
+                document.getElementById('next-course-btn').textContent = `Prossimo: ${nextCourseName}`;
+                
+                currentCourseIndex++;
             } else {
-                // Fine del menu del pranzo
-                currentCourseIndex = menuItems.length; // Per evitare ulteriori incrementi
-                
-                // Evidenzia tutta la sezione cena per un effetto "passiamo alla sera"
-                document.querySelector('#menu-cena').classList.add('active-course');
-                document.querySelector('#menu-pranzo').classList.remove('active-course');
-                
-                // Cambia il pulsante per indicare la fine
-                nextCourseBtn.textContent = "Fine Menu Pranzo! Passiamo alla Cena? 🌙";
-                nextCourseBtn.onclick = () => {
-                    document.querySelector('#menu-cena').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Disabilita il pulsante o cambia la funzione se non vuoi continuare
-                    nextCourseBtn.style.backgroundColor = 'var(--wood-dark)';
-                    nextCourseBtn.style.border = '3px solid var(--cream-bg)';
-                    nextCourseBtn.disabled = true;
-                };
+                // Fine del menu pranzo
+                document.getElementById('next-course-btn').textContent = `Pranzo Finito! Passiamo agli Amari ☕`;
+                document.getElementById('next-course-btn').disabled = true;
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const nextCourseBtnElement = document.getElementById('next-course-btn');
-            if (nextCourseBtnElement) {
-                nextCourseBtnElement.addEventListener('click', highlightNextCourse);
-            }
-        });
-        
-        // *** LOGICA ACCESSO ESCLUSIVO ***
-        const GUEST_GENDERS = {
-            'mario': 'M', 'tina': 'F', 'sara': 'F', 'marco': 'M', 'miriam': 'F', 
-            'selma': 'F', 'desiree': 'F', 'giamma': 'M', 'cristina': 'F', 
-            'armando': 'M', 'michele': 'M', 'rosanna': 'F',
-            'parenti': 'P', 'parente': 'P'
-        };
-        const INVITED_GUESTS = Object.keys(GUEST_GENDERS);
 
-        let isPlaying = false; // Stato iniziale della musica
-
-        function attemptLogin() {
-            const loginOverlay = document.getElementById('login-overlay');
-            const contentWrapper = document.getElementById('content-wrapper');
-            const inputField = document.getElementById('guest-name-input');
-            const errorMessage = document.getElementById('error-message');
-            const welcomeMessage = document.getElementById('welcome-message');
-
-            const inputName = inputField.value.trim().toLowerCase();
-            
-            if (INVITED_GUESTS.includes(inputName)) {
-                // Accesso Riuscito!
-                
-                let welcomeWord;
-                let personalizedName;
-                const gender = GUEST_GENDERS[inputName];
-
-                if (inputName === 'parenti' || inputName === 'parente') {
-                    welcomeWord = 'Benvenuti'; 
-                    personalizedName = 'Cari Parenti';
-                } else {
-                    personalizedName = inputName.charAt(0).toUpperCase() + inputName.slice(1);
-                    welcomeWord = (gender === 'F') ? 'Benvenuta' : 'Benvenuto';
-                }
-                
-                loginOverlay.style.opacity = 0;
-                
-                setTimeout(() => {
-                    loginOverlay.style.display = 'none';
-                    contentWrapper.style.display = 'block';
-                    setupCountdown(); 
-                    startFestiveAnimations(); 
-                    startMenuCycle(); 
-                    
-                    // Musica
-                    const music = document.getElementById('christmas-music');
-                    try {
-                        music.volume = 0.4; 
-                        music.play().then(() => {
-                            document.getElementById('audio-icon').textContent = 'volume_up';
-                            isPlaying = true;
-                        }).catch(error => {
-                            console.log("Autoplay bloccato. L'utente deve interagire.");
-                            document.getElementById('audio-icon').textContent = 'volume_off';
-                            isPlaying = false;
-                        });
-                    } catch(e) {
-                        console.log("Errore riproduzione audio.");
-                    }
-
-                }, 500); 
-                
-                errorMessage.style.display = 'none';
-                
-                welcomeMessage.innerHTML = `${welcomeWord}, **${personalizedName}**! A Natale, tutte le strade conducono a casa. Entrate! Vi accoglie la magia della casa Albanesi, tra profumi di festa e l'abbraccio della famiglia.`;
-                
-            } else {
-                // Accesso Fallito!
-                errorMessage.style.display = 'block';
-                inputField.value = ''; 
-                inputField.focus(); 
+        // Funzione per l'effetto Neve
+        function createSnowflakes(num) {
+            const container = document.querySelector('.snow-container');
+            for (let i = 0; i < num; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.textContent = '❄️'; // O un altro simbolo
+                snowflake.style.left = `${Math.random() * 100}vw`;
+                snowflake.style.animationDuration = `${Math.random() * 3 + 5}s`; // Durata tra 5s e 8s
+                snowflake.style.animationDelay = `${Math.random() * 5}s`;
+                snowflake.style.setProperty('--wind-direction', Math.random() * 40 - 20); // Vento leggero
+                container.appendChild(snowflake);
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputField = document.getElementById('guest-name-input');
-            const accessButton = document.getElementById('access-btn');
-            
-            accessButton.addEventListener('click', attemptLogin);
-            
-            inputField.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    attemptLogin();
-                }
-            });
-            inputField.focus(); 
 
-            // Funzione per rivelare l'augurio
-            document.getElementById('reveal-santa-msg-btn').addEventListener('click', function() {
-                const note = document.getElementById('santa-note');
-                const btn = this;
-                if (note.style.display === 'none') {
-                    note.style.display = 'block';
-                    btn.textContent = 'Nascondi Augurio 📜';
-                } else {
-                    note.style.display = 'none';
-                    btn.textContent = 'Rompi il Sigillo 💌';
-                }
-            });
-        });
+        // Funzione per il Countdown
+        function startCountdown() {
+            const countdownEl = document.getElementById('countdown-timer');
+            // Imposta la data di Natale (25 Dicembre, 13:00) dell'anno in corso
+            const targetDate = new Date(Date.parse('Dec 25, 2025 13:00:00')).getTime(); 
 
-
-        // *** LOGICA CONTATORE ***
-        const christmasDate = new Date("December 25, 2025 13:00:00").getTime();
-        
-        function setupCountdown() {
-            const countdownElement = document.getElementById('countdown-timer');
-            const countdownInterval = setInterval(function() {
+            const interval = setInterval(() => {
                 const now = new Date().getTime();
-                const distance = christmasDate - now;
+                const distance = targetDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.innerHTML = "Il pranzo è INIZIATO! 🍷";
+                    clearInterval(interval);
+                    countdownEl.innerHTML = "È NATALE! IL PRANZO È SERVITO!";
                 } else {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    countdownElement.innerHTML = `Mancano: ${days}g ${hours}h ${minutes}m ${seconds}s`;
+                    countdownEl.innerHTML = `Mancano: ${days}G ${hours}H ${minutes}M ${seconds}S`;
                 }
             }, 1000);
         }
-        
-        // *** LOGICA RIVELA DETTAGLI OSPITI ***
+
+        // Funzione per l'Augurio Segreto
+        document.getElementById('reveal-santa-msg-btn').addEventListener('click', function() {
+            const note = document.getElementById('santa-note');
+            const button = document.getElementById('reveal-santa-msg-btn');
+            
+            if (note.style.display === 'none') {
+                note.style.display = 'block';
+                button.textContent = 'Nascondi l\'Augurio';
+            } else {
+                note.style.display = 'none';
+                button.textContent = 'Rompi il Sigillo 💌';
+            }
+        });
+
+        // Funzione per i dettagli degli Ospiti
         function toggleDetails(element) {
             const details = element.querySelector('.guest-details');
-            details.classList.toggle('show');
             const icon = element.querySelector('.visibility-icon');
+            
             if (details.classList.contains('show')) {
-                icon.textContent = 'visibility_off'; 
+                details.classList.remove('show');
+                icon.textContent = 'visibility';
             } else {
-                icon.textContent = 'visibility'; 
+                details.classList.add('show');
+                icon.textContent = 'visibility_off'; // Icona per nascondere
             }
-        }
-
-        // *** LOGICA NEVICATA REALISTICA ***
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            
-            snowflake.textContent = '❄️';
-            
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 8 + 6;
-            snowflake.style.animationDuration = duration + 's'; 
-            snowflake.style.animationDelay = Math.random() * 5 + 's';
-            
-            const size = Math.random() * 1.3 + 1.2;
-            snowflake.style.fontSize = size + 'rem';
-            snowflake.style.opacity = Math.random() * 0.4 + 0.6;
-            
-            const wind = (Math.random() - 0.5) * 150;
-            snowflake.style.setProperty('--wind-direction', wind); 
-
-            document.querySelector('.snow-container').appendChild(snowflake);
-
-            snowflake.addEventListener('animationend', () => {
-                snowflake.remove();
-            });
         }
         
-        function startFestiveAnimations() {
-            // Crea 50 fiocchi di neve per un effetto denso
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createSnowflake, Math.random() * 5000); 
-            }
-            // Mantiene la nevicata continua
-            setInterval(createSnowflake, 300);
-        }
-
-        // *** LOGICA CONTROLLO AUDIO ***
+        // Funzione per il controllo Audio
         function toggleMusic() {
             const music = document.getElementById('christmas-music');
             const icon = document.getElementById('audio-icon');
 
-            if (isPlaying) {
+            if (music.paused) {
+                music.play().catch(error => {
+                    console.error("Autoplay fallito:", error);
+                    alert("Clicca di nuovo per attivare la musica. I browser moderni bloccano l'autoplay.");
+                });
+                icon.textContent = 'volume_up';
+            } else {
                 music.pause();
                 icon.textContent = 'volume_off';
-                isPlaying = false;
-            } else {
-                // Tenta di riprodurre, se bloccato, l'utente ha interagito.
-                music.play().then(() => {
-                    icon.textContent = 'volume_up';
-                    isPlaying = true;
-                }).catch(error => {
-                    console.log("Riproduzione fallita, problema del browser o del file.");
-                    icon.textContent = 'volume_off';
-                    isPlaying = false;
-                });
             }
         }
+
+        // Inizializza il menu sul primo corso quando il contenuto viene caricato per la prima volta (dopo il login)
+        // La chiamata a startCountdown e createSnowflakes è stata spostata dentro checkAccess.
     </script>
 </body>
 </html>
-
